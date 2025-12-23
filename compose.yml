@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    environment:
+      FLASK_APP: app.py
+      FLASK_DEBUG: 1  # エラーが見やすくなる設定
+
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: 'guest'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'my-db'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:

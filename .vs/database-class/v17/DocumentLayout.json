@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\\u5CF6\u5009\u5F25\u751F\\OneDrive - \u6771\u4EAC\u90FD\u5E02\u5927\u5B66 Tokyo City University\\\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\\1_\u6388\u696D\\database-class\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u5CF6\u5009\u5F25\u751F\\OneDrive - \u6771\u4EAC\u90FD\u5E02\u5927\u5B66 Tokyo City University\\\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\\1_\u6388\u696D\\database-class\\init-scripts\\init.sql||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:init-scripts\\init.sql||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "init.sql",
+              "DocumentMoniker": "C:\\Users\\\u5CF6\u5009\u5F25\u751F\\OneDrive - \u6771\u4EAC\u90FD\u5E02\u5927\u5B66 Tokyo City University\\\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\\1_\u6388\u696D\\database-class\\init-scripts\\init.sql",
+              "RelativeDocumentMoniker": "init-scripts\\init.sql",
+              "ToolTip": "C:\\Users\\\u5CF6\u5009\u5F25\u751F\\OneDrive - \u6771\u4EAC\u90FD\u5E02\u5927\u5B66 Tokyo City University\\\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\\1_\u6388\u696D\\database-class\\init-scripts\\init.sql",
+              "RelativeToolTip": "init-scripts\\init.sql",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2025-12-19T07:23:25.251Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
