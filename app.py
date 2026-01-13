@@ -15,17 +15,24 @@ class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     priority = db.Column(db.String(10), nullable=False)
-    category = db.Column(db.String(20), nullable=False) # カテゴリ追加
+    category = db.Column(db.String(20), nullable=False)
     deadline = db.Column(db.Date)
 
-    # 期限が近いか（今日を含めて3日以内、または期限切れ）を判定する機能
+    # 期限切れ判定（昨日より前）
+    @property
+    def is_overdue(self):
+        if not self.deadline:
+            return False
+        return self.deadline < date.today()
+
+    # 期限間近判定（今日を含めて3日以内。ただし期限切れは含めない）
     @property
     def is_urgent(self):
         if not self.deadline:
             return False
         today = date.today()
-        # 期限切れ、または期限まで3日以内ならTrue
-        return self.deadline <= today + timedelta(days=3)
+        # 「期限切れではない」かつ「3日以内」
+        return today <= self.deadline <= today + timedelta(days=3)
 
 HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -37,27 +44,27 @@ HTML_TEMPLATE = """
     <style>
         body { font-family: "Helvetica Neue", Arial, sans-serif; max-width: 700px; margin: 0 auto; padding: 20px; background-color: #f4f4f9; }
         
-        /* カードの基本スタイル */
         .card { background: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; border-left: 6px solid #ccc; }
         
-        /* 優先度による色分け */
+        /* 優先度（左線の色） */
         .priority-高 { border-left-color: #ff4444; }
         .priority-中 { border-left-color: #ffbb33; }
         .priority-低 { border-left-color: #00C851; }
 
-        /* ★期限切迫時の強調スタイル（全体を赤枠で囲む） */
-        .urgent-alert { border: 2px solid #ff0000; background-color: #fff0f0; }
-        .urgent-text { color: red; font-weight: bold; }
+        /* ★期限間近（赤系） */
+        .urgent-alert { border: 2px solid #ff4444; background-color: #fff0f0; }
+        .urgent-text { color: #d32f2f; font-weight: bold; }
 
-        /* カテゴリラベル */
-        .category-badge {
-            display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; color: white; margin-right: 5px;
-        }
+        /* ★期限切れ（紫系）- 赤と区別するために変更 */
+        .overdue-alert { border: 2px solid #7e57c2; background-color: #ede7f6; }
+        .overdue-text { color: #512da8; font-weight: bold; background: #d1c4e9; padding: 2px 6px; border-radius: 4px; }
+
+        .category-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; color: white; margin-right: 5px; }
         .cat-授業 { background-color: #5c6bc0; }
         .cat-バイト { background-color: #ef6c00; }
         .cat-プライベート { background-color: #8e24aa; }
         .cat-その他 { background-color: #78909c; }
-
+        
         h1 { color: #333; }
         form { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .form-group { margin-bottom: 10px; }
@@ -94,11 +101,13 @@ HTML_TEMPLATE = """
     </form>
 
     {% for task in tasks %}
-    <div class="card priority-{{ task.priority }} {{ 'urgent-alert' if task.is_urgent else '' }}">
-        
+    <div class="card priority-{{ task.priority }} {{ 'overdue-alert' if task.is_overdue else ('urgent-alert' if task.is_urgent else '') }}">
         <div>
             <span class="category-badge cat-{{ task.category }}">{{ task.category }}</span>
-            {% if task.is_urgent %}
+            
+            {% if task.is_overdue %}
+                <span class="overdue-text">🚨 期限を過ぎています</span>
+            {% elif task.is_urgent %}
                 <span class="urgent-text">⚠️ 期限間近！</span>
             {% endif %}
         </div>
@@ -108,7 +117,19 @@ HTML_TEMPLATE = """
         <p style="color: #666; font-size: 0.9em;">
             📅 期限: {{ task.deadline }} 
             {% if task.deadline %}
-                (あと {{ (task.deadline - today).days }} 日)
+                {% set remaining = (task.deadline - today).days %}
+                
+                {% if remaining < 0 %}
+                    <span style="color: #512da8; font-weight: bold;">
+                        ({{ remaining * -1 }} 日経過しています)
+                    </span>
+                {% elif remaining == 0 %}
+                    <span style="color: #d32f2f; font-weight: bold;">
+                        (今日が期限です！)
+                    </span>
+                {% else %}
+                    (あと {{ remaining }} 日)
+                {% endif %}
             {% endif %}
         </p>
         
