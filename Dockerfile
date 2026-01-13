@@ -7,4 +7,5 @@ RUN pip install Flask Flask-SQLAlchemy psycopg2-binary
 
 COPY . .
 
-CMD ["python", "app.py"]
+# 修正ポイント: カッコを使わない書き方に変更（こちらのほうがミスが起きにくいです）
+CMD python app.py
