@@ -27,6 +27,12 @@
 2.  **Application Layer**: Python/SQLAlchemyによるビジネスロジックとCRUD制御。
 3.  **Data Layer**: PostgreSQL 16 によるデータの永続化。
 
+
+## 📦 ER図
+本アプリのデータ構造には、リレーショナルデータベースを採用しています。
+<img width="1212" height="462" alt="ER図" src="https://github.com/user-attachments/assets/729cb78a-a960-49f8-a577-d5fb29bd3887" />
+
+
 ## 🛠 起動方法
 
 ### 1. 前提条件
